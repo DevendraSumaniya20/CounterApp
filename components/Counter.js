@@ -12,16 +12,10 @@ import React, {useState, useEffect} from 'react';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const Counter = () => {
-  const image1 = require('../images/wp11486745-minimalist-phone-art-wallpapers.jpg');
-  const image2 = require('../images/wp9814035-minimalistic-2021-wallpapers.jpg');
+  const [randomImage, setRandomImage] = useState('');
 
   const [count, setCount] = useState(0);
   const [total, setTotal] = useState(0);
-  const [bg, setBg] = useState(image1);
-
-  useEffect(() => {
-    ImageChange(count);
-  }, [count]);
 
   const PressedConter = () => {
     Alert.alert('This app made by Devendra Sumaniya ');
@@ -42,16 +36,34 @@ const Counter = () => {
   };
 
   const ImageChange = () => {
-    if (count % 5 === 0) {
-      setBg(image2);
-    } else {
-      setBg(image1);
-    }
+    const Images = [
+      {
+        image: require('../images/wp11486644-minimalist-phone-art-wallpapers.png'),
+      },
+      {
+        image: require('../images/wp11486677-minimalist-phone-art-wallpapers.jpg'),
+      },
+      {
+        image: require('../images/wp11486743-minimalist-phone-art-wallpapers.jpg'),
+      },
+      {
+        image: require('../images/wp11486745-minimalist-phone-art-wallpapers.jpg'),
+      },
+      {
+        image: require('../images/wp9814035-minimalistic-2021-wallpapers.jpg'),
+      },
+    ];
+    const randomImageIndex = Math.floor(Math.random() * Math.floor(5));
+    return Images[randomImageIndex].image;
   };
+
+  useEffect(() => {
+    setRandomImage(ImageChange);
+  }, [count]);
 
   return (
     <View style={styles.CounterContainer}>
-      <ImageBackground style={styles.imageBackGround} source={bg}>
+      <ImageBackground style={styles.imageBackGround} source={randomImage}>
         <TouchableOpacity style={styles.counterTouch}>
           <Text onPress={PressedConter} style={styles.text}>
             Counter App
