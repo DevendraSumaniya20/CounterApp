@@ -22,7 +22,7 @@ const Counter = () => {
   useEffect(() => {
     ImageChange(count);
   }, [count]);
-  console.log(bg);
+
   const PressedConter = () => {
     Alert.alert('This app made by Devendra Sumaniya ');
   };
@@ -30,8 +30,6 @@ const Counter = () => {
   const IncrementCounter = () => {
     setCount(count + 1);
     setTotal(total + 1);
-    if (count === 10) {
-    }
   };
   const DecrementCounter = () => {
     if (count > 0) setCount(count - 1);
