@@ -7,10 +7,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo, useCallback} from 'react';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+
 const Counter = () => {
   const [randomImage, setRandomImage] = useState('');
 
@@ -21,14 +22,15 @@ const Counter = () => {
     Alert.alert('This app made by Devendra Sumaniya ');
   };
 
-  const IncrementCounter = () => {
+  const IncrementCounter = useCallback(() => {
     setCount(count + 1);
     setTotal(total + 1);
-  };
-  const DecrementCounter = () => {
+  });
+
+  const DecrementCounter = useCallback(() => {
     if (count > 0) setCount(count - 1);
     setTotal(total + 1);
-  };
+  });
 
   const Reset = () => {
     setCount(0);
@@ -57,6 +59,12 @@ const Counter = () => {
     return Images[randomImageIndex].image;
   };
 
+  const isEven = useMemo(() => {
+    let i = 0;
+    while (i < 1000000) i++;
+    return count % 2 === 0;
+  }, [count]);
+
   useEffect(() => {
     setRandomImage(ImageChange);
   }, [count]);
@@ -75,6 +83,9 @@ const Counter = () => {
           </View>
           <View style={styles.MainValueTotalContainer}>
             <Text style={styles.MainValueTotal}> You click {total} times</Text>
+            <Text style={styles.isEvenOrOdd}>
+              count is {isEven ? 'Even ' : 'odd'}
+            </Text>
           </View>
         </View>
         <View style={styles.ButtonMainContainer}>
@@ -124,7 +135,7 @@ const styles = StyleSheet.create({
   },
   MainValue: {
     fontSize: 50,
-    color: '#FFF',
+    color: '#fff',
   },
   MainValueContainer: {
     alignItems: 'center',
@@ -173,6 +184,10 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   MainValueTotal: {
+    fontSize: 20,
+    color: '#FFF',
+  },
+  isEvenOrOdd: {
     fontSize: 20,
     color: '#FFF',
   },
